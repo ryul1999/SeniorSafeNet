@@ -1,6 +1,4 @@
 const suspiciousWebsites = [
-    "phishingtest.com",
-    "free-money.xyz",
     "example.com",
 ];
 
