@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Senior Safe Net",
+    "version": "1.0",
+    "description": "Warns users about suspicious websites and phishing attempts.",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon16.png",
+            "48": "icon48.png",
+            "128": "icon128.png"
+        }
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": [
+                "jquery-3.6.0.slim.min.js",
+                "content.js"
+            ]
+        }
+    ]
+}
