@@ -1,0 +1,54 @@
+let arrSuspiciousWord = [
+    'free', 
+    'urgent', 
+    'click here', 
+    'limited time', 
+    'confirm your account', 
+    'congratulations', 
+    'bank', 
+    'password'
+];
+
+let arrSuspiciousWebSite = [
+    "phishingtest.com",
+    "example.com",
+    "wooribank.com"
+];
+
+chrome.storage.local.get("protectionEnabled", (data) => {
+    if (data.protectionEnabled) {
+        // Flag suspicious emails
+        $('.zA .bog').each(function(idx, elem) {
+            let emailTitle = $(elem).text();
+            let foundWords = arrSuspiciousWord.filter(w => emailTitle.toLowerCase().includes(w));
+
+            let objIcon = $(elem).find('.flag-icon');
+            if (objIcon.length == 0) { 
+                objIcon = $('<span>', { class: 'flag-icon' })
+                    .css({
+                        fontSize: '18px',
+                        marginRight: '5px'
+                    });
+                $(elem).prepend(objIcon); 
+            }
+
+            if (foundWords.length >= 5) $(elem).text('🚩 ' + emailTitle);
+            else if (foundWords.length >= 1) $(elem).text('⚠ ' + emailTitle);
+            else $(elem).text('✅ ' + emailTitle);
+        });
+
+        // Intercept link clicks
+        $(document).on('click', 'a', function(e) {
+            let url = new URL($(this).attr('href'));        
+            let isSuspicious = arrSuspiciousWebSite.some(s => url.toString().includes(s));
+
+            if (isSuspicious) {
+                e.preventDefault();
+                let result = confirm("This website is suspicious. Do you really want to proceed?");                
+                if (result) {
+                    window.open(url, '_blank');
+                }
+            }
+        });
+    }
+});
