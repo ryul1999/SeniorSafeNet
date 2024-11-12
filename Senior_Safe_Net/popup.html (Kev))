@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Senior Safe Net</title>
+</head>
+<body>
+    <button id="toggleProtection">Enable Protection</button>
+    <script src="popup.js"></script>
+</body>
+</html>
